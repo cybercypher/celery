@@ -123,6 +123,8 @@ class RedisBackend(KeyValueStoreBackend):
             connparams.pop('port', None)
         else:
             connparams['db'] = path
+        if scheme == 'rediss':
+            connparams.update({ 'connection_class': self.redis.SSLConnection})
 
         # db may be string and start with / like in kombu.
         db = connparams.get('db') or 0
